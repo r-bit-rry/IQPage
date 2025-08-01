@@ -1,0 +1,1142 @@
+{
+  "metadata": {
+    "report_id": "TSLA_20250731_210956",
+    "version": "2.0.0",
+    "generated_at": "2025-07-31T21:09:56.951511",
+    "generator_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "export_type": "interactive_json"
+  },
+  "company": {
+    "ticker": "TSLA",
+    "name": "TSLA",
+    "sector": "Consumer Discretionary",
+    "industry": "Auto Manufacturing",
+    "market_cap": 999764008173.0,
+    "current_price": 319.04,
+    "currency": "USD"
+  },
+  "valuation": {
+    "summary": {
+      "ari_intrinsic_value": -4619788795.151947,
+      "dcf_intrinsic_value": 21240150962.36897,
+      "blended_intrinsic_value": 8310181083.608511,
+      "confidence_score": 0.5,
+      "investment_signal": "strong_sell"
+    },
+    "components": {
+      "ari": {
+        "current_book_value": 77314000000.0,
+        "present_value_residual_incomes": -18088656062.409325,
+        "terminal_value": -101121495356.1286,
+        "pv_residual_incomes": -18088656062.409325,
+        "terminal_value_pv": -63845132732.74262
+      },
+      "dcf": {
+        "present_value_cash_flows": 8056545113.955865,
+        "terminal_value": 28462416220.330776,
+        "pv_cash_flows": 8056545113.955865,
+        "terminal_value_pv": 13183605848.413105
+      }
+    }
+  },
+  "calculations": {
+    "ari_calculation": {
+      "steps": [
+        {
+          "step_id": "ari_001",
+          "name": "Calculate Required Return (CAPM)",
+          "description": "Calculate cost of equity using Capital Asset Pricing Model",
+          "inputs": {
+            "risk_free_rate": 0.0434,
+            "beta": 0.1,
+            "market_return": 0.08,
+            "market_premium": 0.0366
+          },
+          "formula": {
+            "symbolic": "r = Rf + \u03b2(Rm - Rf)",
+            "latex": "r = R_f + \\beta(R_m - R_f)",
+            "substituted": "r = 0.043 + 0.10(0.080 - 0.043)",
+            "plain_english": "Required return equals risk-free rate plus beta times market risk premium"
+          },
+          "result": 0.047060000000000005,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952383"
+        },
+        {
+          "step_id": "ari_ri_1",
+          "name": "Calculate Residual Income - Period 1",
+          "description": "Calculate residual income for forecast period 1",
+          "inputs": {
+            "earnings": 1230600000.0,
+            "book_value_beginning": 77314000000.0,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 3638396840.0000005
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1230600000.00 - (0.047 \u00d7 77314000000.00)",
+            "plain_english": "Residual income for period 1 equals earnings minus required return on beginning book value"
+          },
+          "result": -2407796840.0000005,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952389"
+        },
+        {
+          "step_id": "ari_ri_2",
+          "name": "Calculate Residual Income - Period 2",
+          "description": "Calculate residual income for forecast period 2",
+          "inputs": {
+            "earnings": 1292130000.0,
+            "book_value_beginning": 78175420000.0,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 3678935265.2000003
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1292130000.00 - (0.047 \u00d7 78175420000.00)",
+            "plain_english": "Residual income for period 2 equals earnings minus required return on beginning book value"
+          },
+          "result": -2386805265.2000003,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952393"
+        },
+        {
+          "step_id": "ari_ri_3",
+          "name": "Calculate Residual Income - Period 3",
+          "description": "Calculate residual income for forecast period 3",
+          "inputs": {
+            "earnings": 1356736500.0000002,
+            "book_value_beginning": 79079911000.0,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 3721500611.6600003
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1356736500.00 - (0.047 \u00d7 79079911000.00)",
+            "plain_english": "Residual income for period 3 equals earnings minus required return on beginning book value"
+          },
+          "result": -2364764111.66,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952395"
+        },
+        {
+          "step_id": "ari_ri_4",
+          "name": "Calculate Residual Income - Period 4",
+          "description": "Calculate residual income for forecast period 4",
+          "inputs": {
+            "earnings": 1424573325.0000002,
+            "book_value_beginning": 80029626550.0,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 3766194225.4430003
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1424573325.00 - (0.047 \u00d7 80029626550.00)",
+            "plain_english": "Residual income for period 4 equals earnings minus required return on beginning book value"
+          },
+          "result": -2341620900.443,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952399"
+        },
+        {
+          "step_id": "ari_ri_5",
+          "name": "Calculate Residual Income - Period 5",
+          "description": "Calculate residual income for forecast period 5",
+          "inputs": {
+            "earnings": 1495801991.2500005,
+            "book_value_beginning": 81026827877.5,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 3813122519.91515
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1495801991.25 - (0.047 \u00d7 81026827877.50)",
+            "plain_english": "Residual income for period 5 equals earnings minus required return on beginning book value"
+          },
+          "result": -2317320528.6651497,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952402"
+        },
+        {
+          "step_id": "ari_ri_6",
+          "name": "Calculate Residual Income - Period 6",
+          "description": "Calculate residual income for forecast period 6",
+          "inputs": {
+            "earnings": 1570592090.8125005,
+            "book_value_beginning": 82073889271.375,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 3862397229.110908
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1570592090.81 - (0.047 \u00d7 82073889271.38)",
+            "plain_english": "Residual income for period 6 equals earnings minus required return on beginning book value"
+          },
+          "result": -2291805138.2984076,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952405"
+        },
+        {
+          "step_id": "ari_ri_7",
+          "name": "Calculate Residual Income - Period 7",
+          "description": "Calculate residual income for forecast period 7",
+          "inputs": {
+            "earnings": 1649121695.3531256,
+            "book_value_beginning": 83173303734.94376,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 3914135673.7664537
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1649121695.35 - (0.047 \u00d7 83173303734.94)",
+            "plain_english": "Residual income for period 7 equals earnings minus required return on beginning book value"
+          },
+          "result": -2265013978.413328,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952407"
+        },
+        {
+          "step_id": "ari_ri_8",
+          "name": "Calculate Residual Income - Period 8",
+          "description": "Calculate residual income for forecast period 8",
+          "inputs": {
+            "earnings": 1731577780.120782,
+            "book_value_beginning": 84327688921.69095,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 3968461040.6547766
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1731577780.12 - (0.047 \u00d7 84327688921.69)",
+            "plain_english": "Residual income for period 8 equals earnings minus required return on beginning book value"
+          },
+          "result": -2236883260.5339947,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952410"
+        },
+        {
+          "step_id": "ari_ri_9",
+          "name": "Calculate Residual Income - Period 9",
+          "description": "Calculate residual income for forecast period 9",
+          "inputs": {
+            "earnings": 1818156669.126821,
+            "book_value_beginning": 85539793367.7755,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 4025502675.887515
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1818156669.13 - (0.047 \u00d7 85539793367.78)",
+            "plain_english": "Residual income for period 9 equals earnings minus required return on beginning book value"
+          },
+          "result": -2207346006.760694,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952413"
+        },
+        {
+          "step_id": "ari_ri_10",
+          "name": "Calculate Residual Income - Period 10",
+          "description": "Calculate residual income for forecast period 10",
+          "inputs": {
+            "earnings": 1909064502.583162,
+            "book_value_beginning": 86812503036.16428,
+            "cost_of_equity": 0.047060000000000005,
+            "required_return": 4085396392.8818913
+          },
+          "formula": {
+            "symbolic": "RI = E - (r \u00d7 BV)",
+            "latex": "RI = E - (r \\times BV_{t-1})",
+            "substituted": "RI = 1909064502.58 - (0.047 \u00d7 86812503036.16)",
+            "plain_english": "Residual income for period 10 equals earnings minus required return on beginning book value"
+          },
+          "result": -2176331890.298729,
+          "dependencies": [
+            "ari_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952418"
+        },
+        {
+          "step_id": "ari_pv_1",
+          "name": "Present Value of Residual Income - Period 1",
+          "description": "Calculate present value of residual income for period 1",
+          "inputs": {
+            "residual_income": -2407796840.0000005,
+            "discount_rate": 0.047060000000000005,
+            "period": 1,
+            "discount_factor": 0.9550551066796553
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2407796840.00 / (1 + 0.047)^1",
+            "plain_english": "Present value of residual income for period 1"
+          },
+          "result": -2299578667.8891373,
+          "dependencies": [
+            "ari_ri_1"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952421"
+        },
+        {
+          "step_id": "ari_pv_2",
+          "name": "Present Value of Residual Income - Period 2",
+          "description": "Calculate present value of residual income for period 2",
+          "inputs": {
+            "residual_income": -2386805265.2000003,
+            "discount_rate": 0.047060000000000005,
+            "period": 2,
+            "discount_factor": 0.9121302567948879
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2386805265.20 / (1 + 0.047)^2",
+            "plain_english": "Present value of residual income for period 2"
+          },
+          "result": -2177077299.4662666,
+          "dependencies": [
+            "ari_ri_2"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952424"
+        },
+        {
+          "step_id": "ari_pv_3",
+          "name": "Present Value of Residual Income - Period 3",
+          "description": "Calculate present value of residual income for period 3",
+          "inputs": {
+            "residual_income": -2364764111.66,
+            "discount_rate": 0.047060000000000005,
+            "period": 3,
+            "discount_factor": 0.871134659708983
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2364764111.66 / (1 + 0.047)^3",
+            "plain_english": "Present value of residual income for period 3"
+          },
+          "result": -2060027979.7029493,
+          "dependencies": [
+            "ari_ri_3"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952427"
+        },
+        {
+          "step_id": "ari_pv_4",
+          "name": "Present Value of Residual Income - Period 4",
+          "description": "Calculate present value of residual income for period 4",
+          "inputs": {
+            "residual_income": -2341620900.443,
+            "discount_rate": 0.047060000000000005,
+            "period": 4,
+            "discount_factor": 0.831981605360708
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2341620900.44 / (1 + 0.047)^4",
+            "plain_english": "Present value of residual income for period 4"
+          },
+          "result": -1948185515.8967535,
+          "dependencies": [
+            "ari_ri_4"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952428"
+        },
+        {
+          "step_id": "ari_pv_5",
+          "name": "Present Value of Residual Income - Period 5",
+          "description": "Calculate present value of residual income for period 5",
+          "inputs": {
+            "residual_income": -2317320528.6651497,
+            "discount_rate": 0.047060000000000005,
+            "period": 5,
+            "discount_factor": 0.7945882808632818
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2317320528.67 / (1 + 0.047)^5",
+            "plain_english": "Present value of residual income for period 5"
+          },
+          "result": -1841315735.0812328,
+          "dependencies": [
+            "ari_ri_5"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952431"
+        },
+        {
+          "step_id": "ari_pv_6",
+          "name": "Present Value of Residual Income - Period 6",
+          "description": "Calculate present value of residual income for period 6",
+          "inputs": {
+            "residual_income": -2291805138.2984076,
+            "discount_rate": 0.047060000000000005,
+            "period": 6,
+            "discount_factor": 0.7588755953462856
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2291805138.30 / (1 + 0.047)^6",
+            "plain_english": "Present value of residual income for period 6"
+          },
+          "result": -1739194988.7438803,
+          "dependencies": [
+            "ari_ri_6"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952433"
+        },
+        {
+          "step_id": "ari_pv_7",
+          "name": "Present Value of Residual Income - Period 7",
+          "description": "Calculate present value of residual income for period 7",
+          "inputs": {
+            "residual_income": -2265013978.413328,
+            "discount_rate": 0.047060000000000005,
+            "period": 7,
+            "discount_factor": 0.7247680126700338
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2265013978.41 / (1 + 0.047)^7",
+            "plain_english": "Present value of residual income for period 7"
+          },
+          "result": -1641609679.8044746,
+          "dependencies": [
+            "ari_ri_7"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952434"
+        },
+        {
+          "step_id": "ari_pv_8",
+          "name": "Present Value of Residual Income - Period 8",
+          "description": "Calculate present value of residual income for period 8",
+          "inputs": {
+            "residual_income": -2236883260.5339947,
+            "discount_rate": 0.047060000000000005,
+            "period": 8,
+            "discount_factor": 0.6921933916585808
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2236883260.53 / (1 + 0.047)^8",
+            "plain_english": "Present value of residual income for period 8"
+          },
+          "result": -1548355810.8533309,
+          "dependencies": [
+            "ari_ri_8"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952436"
+        },
+        {
+          "step_id": "ari_pv_9",
+          "name": "Present Value of Residual Income - Period 9",
+          "description": "Calculate present value of residual income for period 9",
+          "inputs": {
+            "residual_income": -2207346006.760694,
+            "discount_rate": 0.047060000000000005,
+            "period": 9,
+            "discount_factor": 0.6610828335134384
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2207346006.76 / (1 + 0.047)^9",
+            "plain_english": "Present value of residual income for period 9"
+          },
+          "result": -1459238552.693933,
+          "dependencies": [
+            "ari_ri_9"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952438"
+        },
+        {
+          "step_id": "ari_pv_10",
+          "name": "Present Value of Residual Income - Period 10",
+          "description": "Calculate present value of residual income for period 10",
+          "inputs": {
+            "residual_income": -2176331890.298729,
+            "discount_rate": 0.047060000000000005,
+            "period": 10,
+            "discount_factor": 0.6313705360852657
+          },
+          "formula": {
+            "symbolic": "PV = RI / (1 + r)^n",
+            "latex": "PV = \\frac{RI}{(1 + r)^n}",
+            "substituted": "PV = -2176331890.30 / (1 + 0.047)^10",
+            "plain_english": "Present value of residual income for period 10"
+          },
+          "result": -1374071832.2773683,
+          "dependencies": [
+            "ari_ri_10"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952440"
+        },
+        {
+          "step_id": "ari_terminal",
+          "name": "Calculate Terminal Value",
+          "description": "Calculate terminal value using perpetuity growth model",
+          "inputs": {
+            "terminal_residual_income": -2230740187.556197,
+            "terminal_growth_rate": 0.025,
+            "discount_rate": 0.047060000000000005,
+            "terminal_value": -101121495356.1286
+          },
+          "formula": {
+            "symbolic": "TV = RI_terminal / (r - g)",
+            "latex": "TV = \\frac{RI_{terminal}}{r - g}",
+            "substituted": "TV = -2230740187.56 / (0.047 - 0.025)",
+            "plain_english": "Terminal value using perpetuity growth model"
+          },
+          "result": -63845132732.74262,
+          "dependencies": [
+            "ari_ri_10"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952446"
+        }
+      ]
+    },
+    "dcf_calculation": {
+      "steps": [
+        {
+          "step_id": "dcf_001",
+          "name": "Calculate Weighted Average Cost of Capital (WACC)",
+          "description": "Calculate discount rate for DCF valuation",
+          "inputs": {
+            "cost_of_equity": 0.08,
+            "cost_of_debt": 0,
+            "equity_weight": 1.0,
+            "debt_weight": 0.0,
+            "tax_rate": 0.38894907908992415
+          },
+          "formula": {
+            "symbolic": "WACC = (E/V \u00d7 Re) + (D/V \u00d7 Rd \u00d7 (1-T))",
+            "latex": "WACC = \\frac{E}{V} \\times R_e + \\frac{D}{V} \\times R_d \\times (1-T)",
+            "substituted": "WACC = (1.000 \u00d7 0.080) + (0.000 \u00d7 0.000 \u00d7 (1-0.389))",
+            "plain_english": "Weighted Average Cost of Capital calculated from financial statements"
+          },
+          "result": 0.08,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952450"
+        },
+        {
+          "step_id": "dcf_fcf_1",
+          "name": "Free Cash Flow Projection - Period 1",
+          "description": "Project free cash flow for period 1",
+          "inputs": {
+            "operating_cash_flow": 1181376000.0,
+            "capex": 196896000.0,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1181376000.00 - 196896000.00 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 984480000.0,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952457"
+        },
+        {
+          "step_id": "dcf_fcf_2",
+          "name": "Free Cash Flow Projection - Period 2",
+          "description": "Project free cash flow for period 2",
+          "inputs": {
+            "operating_cash_flow": 1240444800.0,
+            "capex": 206740800.0,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1240444800.00 - 206740800.00 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1033704000.0,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952459"
+        },
+        {
+          "step_id": "dcf_fcf_3",
+          "name": "Free Cash Flow Projection - Period 3",
+          "description": "Project free cash flow for period 3",
+          "inputs": {
+            "operating_cash_flow": 1302467040.0,
+            "capex": 217077840.0,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1302467040.00 - 217077840.00 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1085389200.0,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952462"
+        },
+        {
+          "step_id": "dcf_fcf_4",
+          "name": "Free Cash Flow Projection - Period 4",
+          "description": "Project free cash flow for period 4",
+          "inputs": {
+            "operating_cash_flow": 1367590392.0000002,
+            "capex": 227931732.00000006,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1367590392.00 - 227931732.00 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1139658660.0000002,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952465"
+        },
+        {
+          "step_id": "dcf_fcf_5",
+          "name": "Free Cash Flow Projection - Period 5",
+          "description": "Project free cash flow for period 5",
+          "inputs": {
+            "operating_cash_flow": 1435969911.6000001,
+            "capex": 239328318.60000005,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1435969911.60 - 239328318.60 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1196641593.0000002,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952468"
+        },
+        {
+          "step_id": "dcf_fcf_6",
+          "name": "Free Cash Flow Projection - Period 6",
+          "description": "Project free cash flow for period 6",
+          "inputs": {
+            "operating_cash_flow": 1507768407.1800003,
+            "capex": 251294734.5300001,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1507768407.18 - 251294734.53 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1256473672.6500003,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952471"
+        },
+        {
+          "step_id": "dcf_fcf_7",
+          "name": "Free Cash Flow Projection - Period 7",
+          "description": "Project free cash flow for period 7",
+          "inputs": {
+            "operating_cash_flow": 1583156827.5390005,
+            "capex": 263859471.25650012,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1583156827.54 - 263859471.26 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1319297356.2825005,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952474"
+        },
+        {
+          "step_id": "dcf_fcf_8",
+          "name": "Free Cash Flow Projection - Period 8",
+          "description": "Project free cash flow for period 8",
+          "inputs": {
+            "operating_cash_flow": 1662314668.9159505,
+            "capex": 277052444.81932515,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1662314668.92 - 277052444.82 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1385262224.0966256,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952477"
+        },
+        {
+          "step_id": "dcf_fcf_9",
+          "name": "Free Cash Flow Projection - Period 9",
+          "description": "Project free cash flow for period 9",
+          "inputs": {
+            "operating_cash_flow": 1745430402.3617482,
+            "capex": 290905067.0602914,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1745430402.36 - 290905067.06 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1454525335.301457,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952480"
+        },
+        {
+          "step_id": "dcf_fcf_10",
+          "name": "Free Cash Flow Projection - Period 10",
+          "description": "Project free cash flow for period 10",
+          "inputs": {
+            "operating_cash_flow": 1832701922.4798353,
+            "capex": 305450320.41330594,
+            "working_capital_change": 0
+          },
+          "formula": {
+            "symbolic": "FCF = OCF - CapEx - \u0394WC",
+            "latex": "FCF = OCF - CapEx - \\Delta WC",
+            "substituted": "FCF = 1832701922.48 - 305450320.41 - 0.00",
+            "plain_english": "Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus change in Working Capital"
+          },
+          "result": 1527251602.0665295,
+          "dependencies": [],
+          "timestamp": "2025-07-31T21:09:56.952483"
+        },
+        {
+          "step_id": "dcf_pv_1",
+          "name": "Present Value of FCF - Period 1",
+          "description": "Calculate present value of free cash flow for period 1",
+          "inputs": {
+            "free_cash_flow": 984480000.0,
+            "wacc": 0.08,
+            "period": 1,
+            "discount_factor": 0.9259259259259258
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 984480000.00 / (1 + 0.080)^1",
+            "plain_english": "Present value of free cash flow for period 1"
+          },
+          "result": 911555555.5555555,
+          "dependencies": [
+            "dcf_fcf_1",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952486"
+        },
+        {
+          "step_id": "dcf_pv_2",
+          "name": "Present Value of FCF - Period 2",
+          "description": "Calculate present value of free cash flow for period 2",
+          "inputs": {
+            "free_cash_flow": 1033704000.0,
+            "wacc": 0.08,
+            "period": 2,
+            "discount_factor": 0.8573388203017832
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1033704000.00 / (1 + 0.080)^2",
+            "plain_english": "Present value of free cash flow for period 2"
+          },
+          "result": 886234567.9012345,
+          "dependencies": [
+            "dcf_fcf_2",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952487"
+        },
+        {
+          "step_id": "dcf_pv_3",
+          "name": "Present Value of FCF - Period 3",
+          "description": "Calculate present value of free cash flow for period 3",
+          "inputs": {
+            "free_cash_flow": 1085389200.0,
+            "wacc": 0.08,
+            "period": 3,
+            "discount_factor": 0.7938322410201696
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1085389200.00 / (1 + 0.080)^3",
+            "plain_english": "Present value of free cash flow for period 3"
+          },
+          "result": 861616941.015089,
+          "dependencies": [
+            "dcf_fcf_3",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952490"
+        },
+        {
+          "step_id": "dcf_pv_4",
+          "name": "Present Value of FCF - Period 4",
+          "description": "Calculate present value of free cash flow for period 4",
+          "inputs": {
+            "free_cash_flow": 1139658660.0000002,
+            "wacc": 0.08,
+            "period": 4,
+            "discount_factor": 0.7350298527964533
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1139658660.00 / (1 + 0.080)^4",
+            "plain_english": "Present value of free cash flow for period 4"
+          },
+          "result": 837683137.0980034,
+          "dependencies": [
+            "dcf_fcf_4",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952492"
+        },
+        {
+          "step_id": "dcf_pv_5",
+          "name": "Present Value of FCF - Period 5",
+          "description": "Calculate present value of free cash flow for period 5",
+          "inputs": {
+            "free_cash_flow": 1196641593.0000002,
+            "wacc": 0.08,
+            "period": 5,
+            "discount_factor": 0.6805831970337529
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1196641593.00 / (1 + 0.080)^5",
+            "plain_english": "Present value of free cash flow for period 5"
+          },
+          "result": 814414161.0675031,
+          "dependencies": [
+            "dcf_fcf_5",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952494"
+        },
+        {
+          "step_id": "dcf_pv_6",
+          "name": "Present Value of FCF - Period 6",
+          "description": "Calculate present value of free cash flow for period 6",
+          "inputs": {
+            "free_cash_flow": 1256473672.6500003,
+            "wacc": 0.08,
+            "period": 6,
+            "discount_factor": 0.6301696268831045
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1256473672.65 / (1 + 0.080)^6",
+            "plain_english": "Present value of free cash flow for period 6"
+          },
+          "result": 791791545.4822947,
+          "dependencies": [
+            "dcf_fcf_6",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952496"
+        },
+        {
+          "step_id": "dcf_pv_7",
+          "name": "Present Value of FCF - Period 7",
+          "description": "Calculate present value of free cash flow for period 7",
+          "inputs": {
+            "free_cash_flow": 1319297356.2825005,
+            "wacc": 0.08,
+            "period": 7,
+            "discount_factor": 0.5834903952621338
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1319297356.28 / (1 + 0.080)^7",
+            "plain_english": "Present value of free cash flow for period 7"
+          },
+          "result": 769797335.8855643,
+          "dependencies": [
+            "dcf_fcf_7",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952498"
+        },
+        {
+          "step_id": "dcf_pv_8",
+          "name": "Present Value of FCF - Period 8",
+          "description": "Calculate present value of free cash flow for period 8",
+          "inputs": {
+            "free_cash_flow": 1385262224.0966256,
+            "wacc": 0.08,
+            "period": 8,
+            "discount_factor": 0.5402688845019757
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1385262224.10 / (1 + 0.080)^8",
+            "plain_english": "Present value of free cash flow for period 8"
+          },
+          "result": 748414076.5554098,
+          "dependencies": [
+            "dcf_fcf_8",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952500"
+        },
+        {
+          "step_id": "dcf_pv_9",
+          "name": "Present Value of FCF - Period 9",
+          "description": "Calculate present value of free cash flow for period 9",
+          "inputs": {
+            "free_cash_flow": 1454525335.301457,
+            "wacc": 0.08,
+            "period": 9,
+            "discount_factor": 0.5002489671314589
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1454525335.30 / (1 + 0.080)^9",
+            "plain_english": "Present value of free cash flow for period 9"
+          },
+          "result": 727624796.6510928,
+          "dependencies": [
+            "dcf_fcf_9",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952502"
+        },
+        {
+          "step_id": "dcf_pv_10",
+          "name": "Present Value of FCF - Period 10",
+          "description": "Calculate present value of free cash flow for period 10",
+          "inputs": {
+            "free_cash_flow": 1527251602.0665295,
+            "wacc": 0.08,
+            "period": 10,
+            "discount_factor": 0.46319348808468414
+          },
+          "formula": {
+            "symbolic": "PV = FCF / (1 + WACC)^n",
+            "latex": "PV = \\frac{FCF}{(1 + WACC)^n}",
+            "substituted": "PV = 1527251602.07 / (1 + 0.080)^10",
+            "plain_english": "Present value of free cash flow for period 10"
+          },
+          "result": 707412996.7441177,
+          "dependencies": [
+            "dcf_fcf_10",
+            "dcf_001"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952504"
+        },
+        {
+          "step_id": "dcf_terminal",
+          "name": "Calculate Terminal Value",
+          "description": "Calculate terminal value using perpetuity_growth approach",
+          "inputs": {
+            "final_cash_flow": 1527251602.0665295,
+            "terminal_growth_rate": 0.025,
+            "terminal_cash_flow": 1565432892.1181927,
+            "wacc": 0.08,
+            "terminal_value": 28462416220.330776
+          },
+          "formula": {
+            "symbolic": "TV = FCF_terminal / (WACC - g)",
+            "latex": "TV = \\frac{FCF_{terminal}}{WACC - g}",
+            "substituted": "TV = 1565432892.12 / (0.080 - 0.025)",
+            "plain_english": "Terminal value using perpetuity growth model"
+          },
+          "result": 13183605848.413105,
+          "dependencies": [
+            "dcf_fcf_10"
+          ],
+          "timestamp": "2025-07-31T21:09:56.952510"
+        }
+      ]
+    },
+    "reconciliation": {
+      "absolute_difference": 25859939757.520916,
+      "relative_difference": 3.1118382977873464,
+      "reconciliation_quality": "poor",
+      "ari_premium_discount": -1.2175026346722675,
+      "blending_calculation": {
+        "ari_weight": 0.6,
+        "dcf_weight": 0.4,
+        "formula": {
+          "symbolic": "Blended = (w_ARI \u00d7 ARI) + (w_DCF \u00d7 DCF)",
+          "latex": "Blended = (w_{ARI} \\times ARI) + (w_{DCF} \\times DCF)",
+          "substituted": "Blended = (0.6 \u00d7 -4619788795.15) + (0.4 \u00d7 21240150962.37)",
+          "plain_english": "Blended valuation equals weighted average of ARI and DCF valuations"
+        },
+        "result": 8310181083.608511
+      }
+    }
+  },
+  "validation": {
+    "is_valid": false,
+    "quality_metrics": {
+      "overall_quality_score": 0.43999999999999995,
+      "data_quality_score": 0.5,
+      "calculation_quality_score": 0.2,
+      "reconciliation_quality": 0.2,
+      "confidence_level": 0.5
+    },
+    "validation_errors": [
+      "Sanity check failed: ari_value_positive",
+      "Sanity check failed: ari_multiple_reasonable",
+      "Sanity check failed: dcf_multiple_reasonable",
+      "Sanity check failed: blended_multiple_reasonable",
+      "Sanity check failed: ari_terminal_value_reasonable"
+    ],
+    "validation_warnings": [
+      "Threshold check failed: confidence_above_threshold",
+      "Threshold check failed: price_to_value_reasonable",
+      "Consistency check failed: ari_present_values_sum_correctly",
+      "Consistency check failed: dcf_present_values_sum_correctly"
+    ],
+    "accuracy_score": null,
+    "reconciliation_quality": 0.2
+  },
+  "fundamental_analysis": {
+    "fundamental_strength_score": 0.65,
+    "predictability_score": 0.5,
+    "quality_score": 0.72,
+    "data_coverage": 0.7142857142857143,
+    "periods_analyzed": 1,
+    "analysis_date": "2025-07-31T21:09:54.622598",
+    "growth_analysis": {
+      "growth_sustainability_score": 0.5,
+      "earnings_quality_score": 1.0,
+      "growth_consistency_score": 0.5
+    },
+    "cash_flow_analysis": {
+      "working_capital_efficiency": 0.9,
+      "cash_flow_quality_score": 0.8999999999999999,
+      "avg_cash_conversion_ratio": 1.0
+    }
+  },
+  "visualization": {
+    "time_series": {
+      "periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        "Terminal"
+      ],
+      "ari_cash_flows": [
+        -2407796840.0000005,
+        -2386805265.2000003,
+        -2364764111.66,
+        -2341620900.443,
+        -2317320528.6651497,
+        -2291805138.2984076,
+        -2265013978.413328,
+        -2236883260.5339947,
+        -2207346006.760694,
+        -2176331890.298729,
+        0
+      ],
+      "dcf_cash_flows": [
+        984480000.0,
+        1033704000.0,
+        1085389200.0,
+        1139658660.0000002,
+        1196641593.0000002,
+        1256473672.6500003,
+        1319297356.2825005,
+        1385262224.0966256,
+        1454525335.301457,
+        1527251602.0665295,
+        0
+      ],
+      "present_values_ari": [
+        -2299578667.8891373,
+        -2177077299.4662666,
+        -2060027979.7029493,
+        -1948185515.8967535,
+        -1841315735.0812328,
+        -1739194988.7438803,
+        -1641609679.8044746,
+        -1548355810.8533309,
+        -1459238552.693933,
+        -1374071832.2773683,
+        -101121495356.1286
+      ],
+      "present_values_dcf": [
+        911555555.5555555,
+        886234567.9012345,
+        861616941.015089,
+        837683137.0980034,
+        814414161.0675031,
+        791791545.4822947,
+        769797335.8855643,
+        748414076.5554098,
+        727624796.6510928,
+        707412996.7441177,
+        28462416220.330776
+      ]
+    },
+    "waterfall_data": {
+      "starting_value": 78175420000.0,
+      "adjustments": [
+        {
+          "name": "PV of Residual Incomes",
+          "value": -18088656062.409325
+        },
+        {
+          "name": "Terminal Value",
+          "value": -101121495356.1286
+        }
+      ],
+      "ending_value": 8310181083.608511
+    }
+  }
+}

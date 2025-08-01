@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQValuation - Intelligent Quantitative Valuation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #059669;
+            --accent: #f59e0b;
+            --background: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --card-bg: #f9fafb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background-color: var(--background);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        /* Methodology Overview */
+        .methodology {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.25rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+        }
+
+        .split-layout {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .methodology-card {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .methodology-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .methodology-card h3 i {
+            color: var(--secondary);
+        }
+
+        .formula {
+            background-color: white;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            overflow-x: auto;
+        }
+
+        .benefits {
+            margin-top: 1.5rem;
+        }
+
+        .benefits h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .benefits ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .benefits li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .benefits li:before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .diagram {
+            margin: 1.5rem 0;
+            height: 200px;
+            background-color: white;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed var(--border);
+        }
+
+        /* Dashboard */
+        .dashboard {
+            padding: 5rem 0;
+            background-color: #f8fafc;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .company-selector {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .company-selector h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .company-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .company-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .company-item:hover {
+            background-color: var(--card-bg);
+        }
+
+        .company-item.active {
+            border-color: var(--secondary);
+            background-color: rgba(5, 150, 105, 0.1);
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .company-info {
+            flex: 1;
+        }
+
+        .company-ticker {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .company-sector {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .company-stats {
+            font-size: 0.875rem;
+            color: var(--text);
+            margin-top: 0.25rem;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .chart-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-header h3 {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Step-by-Step Calculator */
+        .calculator {
+            padding: 5rem 0;
+        }
+
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .calculation-steps {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .accordion {
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 1rem;
+            background-color: var(--card-bg);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(30, 58, 138, 0.05);
+        }
+
+        .accordion-content {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content.active {
+            max-height: 1000px;
+            padding: 1rem;
+        }
+
+        .formula-display {
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+        }
+
+        .formula-type {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .latex-render {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            margin: 0.5rem 0;
+        }
+
+        /* Data Sources */
+        .sources {
+            padding: 5rem 0;
+            background-color: #f1f5f9;
+        }
+
+        .sources-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .source-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .source-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .data-item {
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 0.5rem;
+        }
+
+        .data-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .data-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Insights Panel */
+        .insights {
+            padding: 5rem 0;
+        }
+
+        .insights-container {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+            color: white;
+            border-radius: 0.75rem;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .insights-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .insights-header h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .confidence-meter {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            width: 80%;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0f172a;
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-info {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            max-width: 600px;
+        }
+
+        .disclaimer {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 1rem;
+            line-height: 1.4;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-container,
+            .sources-container,
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.125rem;
+            }
+        }
+
+        /* Loading states */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Interactive elements */
+        .tooltip {
+            position: absolute;
+            background-color: rgba(30, 58, 138, 0.9);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #047857;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Sankey Diagram Styles */
+        .sankey-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sankey-node rect {
+            cursor: move;
+            fill-opacity: 0.9;
+            shape-rendering: crispEdges;
+        }
+
+        .sankey-node text {
+            pointer-events: none;
+            text-shadow: 0 1px 0 #fff;
+            font-size: 12px;
+            font-weight: 500;
+            fill: var(--text);
+        }
+
+        .sankey-link {
+            fill: none;
+            stroke-opacity: 0.6;
+        }
+
+        .sankey-link:hover {
+            stroke-opacity: 0.8;
+        }
+
+        .sankey-tooltip {
+            position: absolute;
+            background: rgba(30, 58, 138, 0.95);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .sankey-tooltip.visible {
+            opacity: 1;
+        }
+
+        .sankey-value {
+            font-weight: 600;
+            color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                IQ<span>Valuation</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#methodology">Methodology</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#insights">Insights</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Understanding Advanced Valuation: ARI & DCF Methodology</h1>
+            <p>Discover how IQValuation combines traditional DCF with innovative Adjusted Residual Income analysis for
+                superior investment insights</p>
+            <a href="#dashboard" class="cta-button">Explore Live Valuation</a>
+        </div>
+    </section>
+
+    <section class="methodology" id="methodology">
+        <div class="container">
+            <h2 class="section-title">Valuation Methodology Overview</h2>
+            <div class="split-layout">
+                <div class="methodology-card">
+                    <h3>Adjusted Residual Income (ARI)</h3>
+                    <p>ARI measures the economic profit a company generates after accounting for the cost of equity
+                        capital. It focuses on value creation rather than just accounting profit.</p>
+
+                    <div class="formula">RI = Earnings - (Cost of Equity × Book Value)</div>
+
+                    <div class="diagram">
+                        <div style="text-align: center;">
+                            <div style="display: flex; justify-content: space-between; width: 80%; margin: 1rem auto;">
+                                <div style="text-align: center;">
+                                    <div
+                                        style="background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">
+                                        E</div>
+                                    <div style="font-size: 0.8rem;">Earnings</div>
+                                </div>
+                                <div style="text-align: center; margin: 1.5rem 0;">
+                                    <div style="color: var(--primary); font-size: 1.5rem;">−</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div
+                                        style="background: var(--secondary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">
+                                        C</div>
+                                    <div style="font-size: 0.8rem;">Capital Cost</div>
+                                </div>
+                            </div>
+                            <div
+                                style="border-top: 2px solid var(--accent); width: 80%; margin: 1rem auto; padding-top: 0.5rem;">
+                                <div style="color: var(--accent); font-weight: 600;">Residual Income</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="benefits">
+                        <h4>Key Benefits</h4>
+                        <ul>
+                            <li>Accounts for the true cost of equity capital</li>
+                            <li>Focuses on economic profit rather than accounting profit</li>
+                            <li>More sensitive to changes in capital structure</li>
+                            <li>Better for companies with significant book value</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="methodology-card">
+                    <h3>Discounted Cash Flow (DCF)</h3>
+                    <p>DCF values a company based on the present value of its expected future cash flows, discounted at
+                        an appropriate rate that reflects the risk of those cash flows.</p>
+
+                    <div class="formula">PV = FCF / (1 + WACC)<sup>n</sup></div>
+
+                    <div class="diagram">
+                        <div style="text-align: center;">
+                            <div
+                                style="display: flex; flex-direction: column; gap: 0.5rem; width: 80%; margin: 0 auto;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div
+                                        style="background: #3b82f6; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        1</div>
+                                    <div style="flex-grow: 1; height: 2px; background: #d1d5db; margin: 0 0.5rem;">
+                                    </div>
+                                    <div
+                                        style="background: #3b82f6; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        2</div>
+                                    <div style="flex-grow: 1; height: 2px; background: #d1d5db; margin: 0 0.5rem;">
+                                    </div>
+                                    <div
+                                        style="background: #3b82f6; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        3</div>
+                                    <div style="flex-grow: 1; height: 2px; background: #d1d5db; margin: 0 0.5rem;">
+                                    </div>
+                                    <div
+                                        style="background: #6b7280; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        ...</div>
+                                    <div style="flex-grow: 1; height: 2px; background: #d1d5db; margin: 0 0.5rem;">
+                                    </div>
+                                    <div
+                                        style="background: var(--accent); color: #1f2937; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        ∞</div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-light);">
+                                    <span>Year 1</span>
+                                    <span>Year 2</span>
+                                    <span>Year 3</span>
+                                    <span></span>
+                                    <span>Terminal</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 1rem; color: var(--primary); font-weight: 600;">Present Value</div>
+                        </div>
+                    </div>
+
+                    <div class="benefics">
+                        <h4>Key Benefits</h4>
+                        <ul>
+                            <li>Incorporates the time value of money</li>
+                            <li>Based on actual cash generation ability</li>
+                            <li>Enterprise-wide valuation approach</li>
+                            <li>Widely accepted and understood methodology</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dashboard" id="dashboard">
+        <div class="container">
+            <h2 class="section-title">Interactive Valuation Dashboard</h2>
+            <div class="dashboard-container">
+                <div class="company-selector">
+                    <h3>Company Selection</h3>
+                    <div class="company-list" id="companyList">
+                        <!-- Companies will be loaded dynamically -->
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="charts-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Cash Flow Timeline</h3>
+                                <button class="btn btn-outline">Export</button>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="cashFlowChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Present Value Breakdown</h3>
+                                <button class="btn btn-outline">Export</button>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="presentValueChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Valuation Components Flow</h3>
+                                <button class="btn btn-outline">Export</button>
+                            </div>
+                            <div class="chart-container">
+                                <div id="valuationSankey"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Cash Flow Breakdown</h3>
+                                <button class="btn btn-outline">Export</button>
+                            </div>
+                            <div class="chart-container">
+                                <div id="cashFlowSankey"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="calculator" id="calculator">
+        <div class="container">
+            <h2 class="section-title">Step-by-Step Calculation Explorer</h2>
+            <div class="calculator-container">
+                <div class="calculation-steps">
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Calculate Required Return (CAPM)</span>
+                                <span>+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Calculate cost of equity using Capital Asset Pricing Model</p>
+
+                                <div class="formula-display">
+                                    <div class="formula-type">Symbolic Notation</div>
+                                    <div>r = Rf + β(Rm - Rf)</div>
+
+                                    <div class="formula-type">LaTeX Rendering</div>
+                                    <div class="latex-render">r = R_f + \beta(R_m - R_f)</div>
+
+                                    <div class="formula-type">Substituted Values</div>
+                                    <div>r = 0.043 + 0.10(0.080 - 0.043)</div>
+
+                                    <div class="formula-type">Plain English</div>
+                                    <div>Required return equals risk-free rate plus beta times market risk premium</div>
+                                </div>
+
+                                <div class="data-grid" style="margin-top: 1rem;">
+                                    <div class="data-item">
+                                        <div class="data-label">Risk-free rate</div>
+                                        <div class="data-value">4.34%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Beta</div>
+                                        <div class="data-value">0.10</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Market return</div>
+                                        <div class="data-value">8.00%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Result</div>
+                                        <div class="data-value">4.71%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Calculate Residual Income - Period 1</span>
+                                <span>+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Calculate residual income for forecast period 1</p>
+
+                                <div class="formula-display">
+                                    <div class="formula-type">Symbolic Notation</div>
+                                    <div>RI = E - (r × BV)</div>
+
+                                    <div class="formula-type">LaTeX Rendering</div>
+                                    <div class="latex-render">RI = E - (r \times BV_{t-1})</div>
+
+                                    <div class="formula-type">Substituted Values</div>
+                                    <div>RI = -5,010,705.00 - (0.047 × 269,330,000.00)</div>
+
+                                    <div class="formula-type">Plain English</div>
+                                    <div>Residual income for period 1 equals earnings minus required return on beginning
+                                        book value</div>
+                                </div>
+
+                                <div class="data-grid" style="margin-top: 1rem;">
+                                    <div class="data-item">
+                                        <div class="data-label">Earnings</div>
+                                        <div class="data-value">-$5.01M</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Book Value</div>
+                                        <div class="data-value">$269.33M</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Cost of Equity</div>
+                                        <div class="data-value">4.71%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Result</div>
+                                        <div class="data-value">-$17.69M</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Present Value of Residual Income - Period 1</span>
+                                <span>+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Calculate present value of residual income for period 1</p>
+
+                                <div class="formula-display">
+                                    <div class="formula-type">Symbolic Notation</div>
+                                    <div>PV = RI / (1 + r)<sup>n</sup></div>
+
+                                    <div class="formula-type">LaTeX Rendering</div>
+                                    <div class="latex-render">PV = \frac{RI}{(1 + r)^n}</div>
+
+                                    <div class="formula-type">Substituted Values</div>
+                                    <div>PV = -17,685,374.80 / (1 + 0.047)<sup>1</sup></div>
+
+                                    <div class="formula-type">Plain English</div>
+                                    <div>Present value of residual income for period 1</div>
+                                </div>
+
+                                <div class="data-grid" style="margin-top: 1rem;">
+                                    <div class="data-item">
+                                        <div class="data-label">Residual Income</div>
+                                        <div class="data-value">-$17.69M</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Discount Rate</div>
+                                        <div class="data-value">4.71%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Period</div>
+                                        <div class="data-value">1</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Result</div>
+                                        <div class="data-value">-$16.89M</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Calculate Terminal Value</span>
+                                <span>+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Calculate terminal value using perpetuity growth model</p>
+
+                                <div class="formula-display">
+                                    <div class="formula-type">Symbolic Notation</div>
+                                    <div>TV = RI<sub>terminal</sub> / (r - g)</div>
+
+                                    <div class="formula-type">LaTeX Rendering</div>
+                                    <div class="latex-render">TV = \frac{RI_{terminal}}{r - g}</div>
+
+                                    <div class="formula-type">Substituted Values</div>
+                                    <div>TV = -19,093,540.09 / (0.047 - 0.025)</div>
+
+                                    <div class="formula-type">Plain English</div>
+                                    <div>Terminal value using perpetuity growth model</div>
+                                </div>
+
+                                <div class="data-grid" style="margin-top: 1rem;">
+                                    <div class="data-item">
+                                        <div class="data-label">Terminal RI</div>
+                                        <div class="data-value">-$19.09M</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Discount Rate</div>
+                                        <div class="data-value">4.71%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Growth Rate</div>
+                                        <div class="data-value">2.50%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Result</div>
+                                        <div class="data-value">-$546.47M</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calculation-steps">
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Calculate WACC</span>
+                                <span>+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Calculate discount rate for DCF valuation</p>
+
+                                <div class="formula-display">
+                                    <div class="formula-type">Symbolic Notation</div>
+                                    <div>WACC = (E/V × Re) + (D/V × Rd × (1-T))</div>
+
+                                    <div class="formula-type">LaTeX Rendering</div>
+                                    <div class="latex-render">WACC = \frac{E}{V} \times R_e + \frac{D}{V} \times R_d
+                                        \times (1-T)</div>
+
+                                    <div class="formula-type">Substituted Values</div>
+                                    <div>WACC = (1.000 × 0.080) + (0.000 × 0.000 × (1-0.000))</div>
+
+                                    <div class="formula-type">Plain English</div>
+                                    <div>Weighted Average Cost of Capital calculated from financial statements</div>
+                                </div>
+
+                                <div class="data-grid" style="margin-top: 1rem;">
+                                    <div class="data-item">
+                                        <div class="data-label">Cost of Equity</div>
+                                        <div class="data-value">8.00%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Cost of Debt</div>
+                                        <div class="data-value">0.00%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Equity Weight</div>
+                                        <div class="data-value">100%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Result</div>
+                                        <div class="data-value">8.00%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Free Cash Flow Projection - Period 1</span>
+                                <span>+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Project free cash flow for period 1</p>
+
+                                <div class="formula-display">
+                                    <div class="formula-type">Symbolic Notation</div>
+                                    <div>FCF = OCF - CapEx - ΔWC</div>
+
+                                    <div class="formula-type">LaTeX Rendering</div>
+                                    <div class="latex-render">FCF = OCF - CapEx - \Delta WC</div>
+
+                                    <div class="formula-type">Substituted Values</div>
+                                    <div>FCF = -4,810,276.80 - -801,712.80 - 0.00</div>
+
+                                    <div class="formula-type">Plain English</div>
+                                    <div>Free Cash Flow equals Operating Cash Flow minus Capital Expenditures minus
+                                        change in Working Capital</div>
+                                </div>
+
+                                <div class="data-grid" style="margin-top: 1rem;">
+                                    <div class="data-item">
+                                        <div class="data-label">Operating CF</div>
+                                        <div class="data-value">-$4.81M</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">CapEx</div>
+                                        <div class="data-value">-$0.80M</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">WC Change</div>
+                                        <div class="data-value">$0.00</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Result</div>
+                                        <div class="data-value">-$4.01M</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Present Value of FCF - Period 1</span>
+                                <span>+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Calculate present value of free cash flow for period 1</p>
+
+                                <div class="formula-display">
+                                    <div class="formula-type">Symbolic Notation</div>
+                                    <div>PV = FCF / (1 + WACC)<sup>n</sup></div>
+
+                                    <div class="formula-type">LaTeX Rendering</div>
+                                    <div class="latex-render">PV = \frac{FCF}{(1 + WACC)^n}</div>
+
+                                    <div class="formula-type">Substituted Values</div>
+                                    <div>PV = -4,008,564.00 / (1 + 0.080)<sup>1</sup></div>
+
+                                    <div class="formula-type">Plain English</div>
+                                    <div>Present value of free cash flow for period 1</div>
+                                </div>
+
+                                <div class="data-grid" style="margin-top: 1rem;">
+                                    <div class="data-item">
+                                        <div class="data-label">Free Cash Flow</div>
+                                        <div class="data-value">-$4.01M</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">WACC</div>
+                                        <div class="data-value">8.00%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Period</div>
+                                        <div class="data-value">1</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Result</div>
+                                        <div class="data-value">-$3.71M</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Calculate Terminal Value</span>
+                                <span>+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Calculate terminal value using perpetuity_growth approach</p>
+
+                                <div class="formula-display">
+                                    <div class="formula-type">Symbolic Notation</div>
+                                    <div>TV = FCF<sub>terminal</sub> / (WACC - g)</div>
+
+                                    <div class="formula-type">LaTeX Rendering</div>
+                                    <div class="latex-render">TV = \frac{FCF_{terminal}}{WACC - g}</div>
+
+                                    <div class="formula-type">Substituted Values</div>
+                                    <div>TV = -6,374,063.40 / (0.080 - 0.025)</div>
+
+                                    <div class="formula-type">Plain English</div>
+                                    <div>Terminal value using perpetuity growth model</div>
+                                </div>
+
+                                <div class="data-grid" style="margin-top: 1rem;">
+                                    <div class="data-item">
+                                        <div class="data-label">Terminal FCF</div>
+                                        <div class="data-value">-$6.37M</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">WACC</div>
+                                        <div class="data-value">8.00%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Growth Rate</div>
+                                        <div class="data-value">2.50%</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Result</div>
+                                        <div class="data-value">-$53.68M</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sources">
+        <div class="container">
+            <h2 class="section-title">Data Sources & Methodology</h2>
+            <div class="sources-container">
+                <div class="source-card">
+                    <h3>Data Sources</h3>
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <div class="data-label">Financial Statements</div>
+                            <div class="data-value">SEC EDGAR</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Market Data</div>
+                            <div class="data-value">NASDAQ API</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Risk-free Rates</div>
+                            <div class="data-value">Federal Reserve</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Industry Benchmarks</div>
+                            <div class="data-value">S&P Global</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="source-card">
+                    <h3>Quality Assurance</h3>
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <div class="data-label">Overall Quality Score</div>
+                            <div class="data-value" id="overallQuality">--</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Data Quality Score</div>
+                            <div class="data-value" id="dataQuality">--</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Calculation Quality</div>
+                            <div class="data-value" id="calcQuality">--</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Confidence Level</div>
+                            <div class="data-value" id="confidenceLevel">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="insights" id="insights">
+        <div class="container">
+            <div class="insights-container">
+                <div class="insights-header">
+                    <h3>Professional Insights Panel</h3>
+                    <p>Key metrics and investment signals based on our quantitative analysis</p>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="currentPrice">--</div>
+                        <div class="metric-label">Current Market Price</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="investmentSignal">--</div>
+                        <div class="metric-label">Investment Signal</div>
+                        <div class="confidence-meter">
+                            <div class="confidence-fill" id="signalConfidence"></div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="confidenceScore">--</div>
+                        <div class="metric-label">Confidence Score</div>
+                        <div class="confidence-meter">
+                            <div class="confidence-fill" id="confidenceMeter"></div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="blendedValue">--</div>
+                        <div class="metric-label">Blended Intrinsic Value</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-logo">
+                IQ<span>Valuation</span>
+            </div>
+            <div class="footer-info">
+                <p>Intelligent Quantitative Valuation for institutional investors and financial professionals. Our
+                    advanced models combine traditional valuation methods with innovative quantitative approaches to
+                    deliver superior investment insights.</p>
+                <p class="disclaimer">Disclaimer: This information is for educational purposes only and does not
+                    constitute investment advice. Past performance is not indicative of future results. Please consult
+                    with a qualified financial advisor before making any investment decisions.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables to store data and charts
+        let currentData = null;
+        let charts = {};
+        let availableCompanies = [];
+
+        // Utility functions
+        function formatCurrency(value, inMillions = true) {
+            const absValue = Math.abs(value);
+            const sign = value < 0 ? '-' : '';
+
+            if (inMillions) {
+                return `${sign}$${(absValue / 1000000).toFixed(2)}M`;
+            } else {
+                if (absValue >= 1000000000000) {
+                    return `${sign}$${(absValue / 1000000000000).toFixed(2)}T`;
+                } else if (absValue >= 1000000000) {
+                    return `${sign}$${(absValue / 1000000000).toFixed(2)}B`;
+                } else if (absValue >= 1000000) {
+                    return `${sign}$${(absValue / 1000000).toFixed(2)}M`;
+                } else {
+                    return `${sign}$${absValue.toLocaleString()}`;
+                }
+            }
+        }
+
+        function formatPercentage(value) {
+            return `${(value * 100).toFixed(2)}%`;
+        }
+
+        function getCompanyLogo(ticker) {
+            const logoMap = {
+                'OKLO': 'OK',
+                'TSLA': 'TS',
+                'AAPL': 'AP',
+                'IONQ': 'IQ'
+            };
+            return logoMap[ticker] || ticker.substring(0, 2);
+        }
+
+        // Discover available companies by checking JSON files
+        async function discoverCompanies() {
+            const potentialTickers = ['AAPL', 'IONQ', 'OKLO', 'TSLA'];
+            const companies = [];
+
+            for (const ticker of potentialTickers) {
+                try {
+                    const response = await fetch(`Reports/${ticker}_valuation_report_interactive.json`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        companies.push({
+                            ticker: data.company.ticker,
+                            name: data.company.name,
+                            sector: data.company.sector,
+                            market_cap: data.company.market_cap,
+                            current_price: data.company.current_price
+                        });
+                    }
+                } catch (error) {
+                    console.log(`${ticker} data not available`);
+                }
+            }
+
+            availableCompanies = companies;
+            return companies;
+        }
+
+        // Populate company list dynamically
+        function populateCompanyList(companies) {
+            const companyList = document.getElementById('companyList');
+            companyList.innerHTML = '';
+
+            companies.forEach((company, index) => {
+                const companyItem = document.createElement('div');
+                companyItem.className = `company-item ${index === 0 ? 'active' : ''}`;
+                companyItem.innerHTML = `
+                    <div class="company-logo">${getCompanyLogo(company.ticker)}</div>
+                    <div class="company-info">
+                        <div class="company-ticker">${company.ticker}</div>
+                        <div class="company-sector">${company.sector}</div>
+                        <div class="company-stats">${formatCurrency(company.market_cap, false)} • $${company.current_price}</div>
+                    </div>
+                `;
+
+                companyItem.addEventListener('click', function () {
+                    document.querySelectorAll('.company-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    loadCompanyData(company.ticker);
+                });
+
+                companyList.appendChild(companyItem);
+            });
+        }
+
+        // Load company data
+        async function loadCompanyData(ticker) {
+            try {
+                const response = await fetch(`Reports/${ticker}_valuation_report_interactive.json`);
+                if (!response.ok) throw new Error(`Failed to load ${ticker} data`);
+                const data = await response.json();
+                currentData = data;
+                updateUI(data);
+                updateCharts(data);
+                updateCalculationSteps(data);
+            } catch (error) {
+                console.error('Error loading company data:', error);
+                alert(`Failed to load data for ${ticker}. Please check if the file exists.`);
+            }
+        }
+
+        // Update UI with company data
+        function updateUI(data) {
+            const company = data.company;
+            const valuation = data.valuation;
+
+            // Update insights panel
+            document.getElementById('currentPrice').textContent = `$${company.current_price}`;
+            document.getElementById('investmentSignal').textContent = valuation.summary.investment_signal.replace('_', ' ').toUpperCase();
+            document.getElementById('confidenceScore').textContent = `${Math.round(valuation.summary.confidence_score * 100)}%`;
+            document.getElementById('blendedValue').textContent = formatCurrency(valuation.summary.blended_intrinsic_value);
+
+            // Update confidence meters
+            const confidencePercentage = valuation.summary.confidence_score * 100;
+            document.getElementById('signalConfidence').style.width = `${confidencePercentage}%`;
+            document.getElementById('confidenceMeter').style.width = `${confidencePercentage}%`;
+
+            // Update data sources quality scores
+            document.getElementById('overallQuality').textContent = `${Math.round(confidencePercentage)}%`;
+            document.getElementById('dataQuality').textContent = '80.0%'; // Static for now
+            document.getElementById('calcQuality').textContent = `${Math.round(100 - confidencePercentage)}%`;
+            document.getElementById('confidenceLevel').textContent = `${Math.round(confidencePercentage)}%`;
+        }
+
+        // Update charts with new data
+        function updateCharts(data) {
+            const ariSteps = data.calculations.ari_calculation.steps;
+            const dcfSteps = data.calculations.dcf_calculation.steps;
+
+            // Extract residual income and FCF data
+            const ariData = [];
+            const dcfData = [];
+            const ariPVData = [];
+            const dcfPVData = [];
+
+            // Get ARI residual income values
+            for (let i = 1; i <= 10; i++) {
+                const riStep = ariSteps.find(step => step.step_id === `ari_ri_${i}`);
+                const pvStep = ariSteps.find(step => step.step_id === `ari_pv_${i}`);
+                if (riStep) ariData.push(riStep.result / 1000000); // Convert to millions
+                if (pvStep) ariPVData.push(pvStep.result / 1000000);
+            }
+
+            // Get DCF free cash flow values
+            for (let i = 1; i <= 10; i++) {
+                const fcfStep = dcfSteps.find(step => step.step_id === `dcf_fcf_${i}`);
+                const pvStep = dcfSteps.find(step => step.step_id === `dcf_pv_${i}`);
+                if (fcfStep) dcfData.push(fcfStep.result / 1000000);
+                if (pvStep) dcfPVData.push(pvStep.result / 1000000);
+            }
+
+            // Add terminal values
+            ariData.push(0);
+            dcfData.push(0);
+            const ariTerminal = ariSteps.find(step => step.step_id === 'ari_terminal');
+            const dcfTerminal = dcfSteps.find(step => step.step_id.includes('terminal'));
+            if (ariTerminal) ariPVData.push(ariTerminal.result / 1000000);
+            if (dcfTerminal) dcfPVData.push(dcfTerminal.result / 1000000);
+
+            // Update Cash Flow Timeline Chart
+            charts.cashFlow.data.datasets[0].data = ariData;
+            charts.cashFlow.data.datasets[1].data = dcfData;
+            charts.cashFlow.update();
+
+            // Update Present Value Breakdown Chart
+            charts.presentValue.data.datasets[0].data = ariPVData;
+            charts.presentValue.data.datasets[1].data = dcfPVData;
+            charts.presentValue.update();
+
+            // Update Sankey diagrams
+            updateValuationSankey(data);
+            updateCashFlowSankey(data);
+        }
+
+        // Update calculation steps
+        function updateCalculationSteps(data) {
+            const ariSteps = data.calculations.ari_calculation.steps;
+            const dcfSteps = data.calculations.dcf_calculation.steps;
+
+            // Update ARI steps
+            updateAccordionStep(0, ariSteps.find(step => step.step_id === 'ari_001'));
+            updateAccordionStep(1, ariSteps.find(step => step.step_id === 'ari_ri_1'));
+            updateAccordionStep(2, ariSteps.find(step => step.step_id === 'ari_pv_1'));
+            updateAccordionStep(3, ariSteps.find(step => step.step_id === 'ari_terminal'));
+
+            // Update DCF steps
+            updateAccordionStep(4, dcfSteps.find(step => step.step_id === 'dcf_001'));
+            updateAccordionStep(5, dcfSteps.find(step => step.step_id === 'dcf_fcf_1'));
+            updateAccordionStep(6, dcfSteps.find(step => step.step_id === 'dcf_pv_1'));
+            updateAccordionStep(7, dcfSteps.find(step => step.step_id.includes('terminal')));
+        }
+
+        function updateAccordionStep(index, stepData) {
+            if (!stepData) return;
+
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            if (index >= accordionItems.length) return;
+
+            const item = accordionItems[index];
+            const content = item.querySelector('.accordion-content');
+
+            // Update formula displays
+            const formulaDisplays = content.querySelectorAll('.formula-display div');
+            if (formulaDisplays.length >= 8) {
+                formulaDisplays[1].textContent = stepData.formula.symbolic;
+                formulaDisplays[3].textContent = stepData.formula.latex;
+                formulaDisplays[5].textContent = stepData.formula.substituted;
+                formulaDisplays[7].textContent = stepData.formula.plain_english;
+            }
+
+            // Update data grid
+            const dataItems = content.querySelectorAll('.data-item .data-value');
+            if (stepData.inputs && dataItems.length >= 4) {
+                const inputs = Object.values(stepData.inputs);
+                const result = stepData.result;
+
+                for (let i = 0; i < Math.min(inputs.length, dataItems.length - 1); i++) {
+                    const value = inputs[i];
+                    if (typeof value === 'number') {
+                        if (value < 1 && value > 0) {
+                            dataItems[i].textContent = formatPercentage(value);
+                        } else {
+                            dataItems[i].textContent = formatCurrency(value);
+                        }
+                    } else {
+                        dataItems[i].textContent = value;
+                    }
+                }
+
+                // Update result
+                if (dataItems[dataItems.length - 1]) {
+                    if (typeof result === 'number') {
+                        if (result < 1 && result > 0) {
+                            dataItems[dataItems.length - 1].textContent = formatPercentage(result);
+                        } else {
+                            dataItems[dataItems.length - 1].textContent = formatCurrency(result);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Cash Flow Timeline Chart
+            const cashFlowCtx = document.getElementById('cashFlowChart').getContext('2d');
+            charts.cashFlow = new Chart(cashFlowCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Terminal'],
+                    datasets: [
+                        {
+                            label: 'ARI Residual Income',
+                            data: [],
+                            borderColor: '#1e3a8a',
+                            backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                            tension: 0.3,
+                            pointRadius: 4
+                        },
+                        {
+                            label: 'DCF Free Cash Flow',
+                            data: [],
+                            borderColor: '#059669',
+                            backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                            tension: 0.3,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return `${context.dataset.label}: $${context.parsed.y.toFixed(2)}M`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Cash Flow (Millions)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Forecast Period'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Present Value Breakdown Chart
+            const presentValueCtx = document.getElementById('presentValueChart').getContext('2d');
+            charts.presentValue = new Chart(presentValueCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Terminal'],
+                    datasets: [
+                        {
+                            label: 'ARI Present Value',
+                            data: [],
+                            backgroundColor: 'rgba(30, 58, 138, 0.7)',
+                            borderColor: '#1e3a8a',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'DCF Present Value',
+                            data: [],
+                            backgroundColor: 'rgba(5, 150, 105, 0.7)',
+                            borderColor: '#059669',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return `${context.dataset.label}: $${context.parsed.y.toFixed(2)}M`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Present Value (Millions)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Forecast Period'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Initialize Sankey diagrams
+            initializeSankeyDiagrams();
+        }
+
+        // Sankey diagram functions
+        function initializeSankeyDiagrams() {
+            // Create tooltip elements
+            const valuationTooltip = d3.select('body').append('div')
+                .attr('class', 'sankey-tooltip')
+                .attr('id', 'valuation-tooltip');
+
+            const cashFlowTooltip = d3.select('body').append('div')
+                .attr('class', 'sankey-tooltip')
+                .attr('id', 'cashflow-tooltip');
+        }
+
+        function updateValuationSankey(data) {
+            const container = d3.select('#valuationSankey');
+            container.selectAll('*').remove();
+
+            const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+            const width = 280 - margin.left - margin.right;
+            const height = 280 - margin.top - margin.bottom;
+
+            const svg = container.append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            // Extract data
+            const ariComponents = data.valuation.components.ari;
+            const dcfComponents = data.valuation.components.dcf;
+            const summary = data.valuation.summary;
+
+            // Convert to millions for display
+            const bookValue = ariComponents.current_book_value / 1000000;
+            const ariPV = ariComponents.present_value_residual_incomes / 1000000;
+            const ariTerminal = ariComponents.terminal_value_pv / 1000000;
+            const dcfPV = dcfComponents.present_value_cash_flows / 1000000;
+            const dcfTerminal = dcfComponents.terminal_value_pv / 1000000;
+            const ariTotal = summary.ari_intrinsic_value / 1000000;
+            const dcfTotal = summary.dcf_intrinsic_value / 1000000;
+            const blended = summary.blended_intrinsic_value / 1000000;
+
+            // Create nodes and links
+            const nodes = [
+                { name: 'Book Value', value: Math.abs(bookValue), color: '#6b7280', originalValue: bookValue },
+                { name: 'ARI PV Residual', value: Math.abs(ariPV), color: ariPV >= 0 ? '#1e3a8a' : '#dc2626', originalValue: ariPV },
+                { name: 'ARI Terminal', value: Math.abs(ariTerminal), color: ariTerminal >= 0 ? '#3b82f6' : '#ef4444', originalValue: ariTerminal },
+                { name: 'DCF PV Cash Flows', value: Math.abs(dcfPV), color: dcfPV >= 0 ? '#059669' : '#dc2626', originalValue: dcfPV },
+                { name: 'DCF Terminal', value: Math.abs(dcfTerminal), color: dcfTerminal >= 0 ? '#10b981' : '#ef4444', originalValue: dcfTerminal },
+                { name: 'ARI Value', value: Math.abs(ariTotal), color: ariTotal >= 0 ? '#1e40af' : '#dc2626', originalValue: ariTotal },
+                { name: 'DCF Value', value: Math.abs(dcfTotal), color: dcfTotal >= 0 ? '#047857' : '#dc2626', originalValue: dcfTotal },
+                { name: 'Blended Value', value: Math.abs(blended), color: blended >= 0 ? '#f59e0b' : '#dc2626', originalValue: blended }
+            ];
+
+            const links = [
+                { source: 0, target: 5, value: Math.abs(bookValue) },
+                { source: 1, target: 5, value: Math.abs(ariPV) },
+                { source: 2, target: 5, value: Math.abs(ariTerminal) },
+                { source: 3, target: 6, value: Math.abs(dcfPV) },
+                { source: 4, target: 6, value: Math.abs(dcfTerminal) },
+                { source: 5, target: 7, value: Math.abs(ariTotal) * 0.5 },
+                { source: 6, target: 7, value: Math.abs(dcfTotal) * 0.5 }
+            ];
+
+            // Create sankey generator
+            const sankey = d3.sankey()
+                .nodeWidth(15)
+                .nodePadding(10)
+                .extent([[1, 1], [width - 1, height - 6]]);
+
+            const { nodes: sankeyNodes, links: sankeyLinks } = sankey({
+                nodes: nodes.map(d => Object.assign({}, d)),
+                links: links.map(d => Object.assign({}, d))
+            });
+
+            // Add links
+            svg.append('g')
+                .selectAll('path')
+                .data(sankeyLinks)
+                .join('path')
+                .attr('d', d3.sankeyLinkHorizontal())
+                .attr('stroke', d => d.source.color)
+                .attr('stroke-width', d => Math.max(1, d.width))
+                .attr('fill', 'none')
+                .attr('stroke-opacity', 0.6)
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('stroke-opacity', 0.8);
+                    const tooltip = d3.select('#valuation-tooltip');
+                    tooltip.html(`
+                        <div><strong>${d.source.name} → ${d.target.name}</strong></div>
+                        <div class="sankey-value">$${d.value.toFixed(1)}M</div>
+                    `)
+                    .classed('visible', true)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                    d3.select('#valuation-tooltip').classed('visible', false);
+                });
+
+            // Add nodes
+            const node = svg.append('g')
+                .selectAll('g')
+                .data(sankeyNodes)
+                .join('g');
+
+            node.append('rect')
+                .attr('x', d => d.x0)
+                .attr('y', d => d.y0)
+                .attr('height', d => d.y1 - d.y0)
+                .attr('width', d => d.x1 - d.x0)
+                .attr('fill', d => d.color)
+                .attr('stroke', '#000')
+                .attr('stroke-width', 0.5);
+
+            node.append('text')
+                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr('y', d => (d.y1 + d.y0) / 2)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', d => d.x0 < width / 2 ? 'start' : 'end')
+                .text(d => d.name)
+                .style('font-size', '10px')
+                .style('font-weight', '500');
+
+            node.append('text')
+                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr('y', d => (d.y1 + d.y0) / 2 + 12)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', d => d.x0 < width / 2 ? 'start' : 'end')
+                .text(d => {
+                    const sign = d.originalValue < 0 ? '-' : '';
+                    return `${sign}$${d.value.toFixed(1)}M`;
+                })
+                .style('font-size', '9px')
+                .style('font-weight', '600')
+                .style('fill', d => d.originalValue < 0 ? '#dc2626' : '#6b7280');
+        }
+
+        function updateCashFlowSankey(data) {
+            const container = d3.select('#cashFlowSankey');
+            container.selectAll('*').remove();
+
+            const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+            const width = 280 - margin.left - margin.right;
+            const height = 280 - margin.top - margin.bottom;
+
+            const svg = container.append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            // Extract DCF data for first 3 periods
+            const dcfSteps = data.calculations.dcf_calculation.steps;
+            
+            // Get operating cash flows, capex, and free cash flows for first 3 periods
+            const periods = [1, 2, 3];
+            let totalOCF = 0, totalCapex = 0, totalFCF = 0, totalPV = 0;
+
+            periods.forEach(period => {
+                const fcfStep = dcfSteps.find(step => step.step_id === `dcf_fcf_${period}`);
+                const pvStep = dcfSteps.find(step => step.step_id === `dcf_pv_${period}`);
+                
+                if (fcfStep) {
+                    totalOCF += fcfStep.inputs.operating_cash_flow;
+                    totalCapex += fcfStep.inputs.capex;
+                    totalFCF += fcfStep.result;
+                }
+                if (pvStep) {
+                    totalPV += pvStep.result;
+                }
+            });
+
+            // Convert to millions
+            totalOCF = totalOCF / 1000000;
+            totalCapex = totalCapex / 1000000;
+            totalFCF = totalFCF / 1000000;
+            totalPV = totalPV / 1000000;
+
+            // Get terminal value from DCF components
+            const terminalPV = Math.abs(data.valuation.components.dcf.terminal_value_pv / 1000000);
+
+            // Create nodes and links
+            const nodes = [
+                { name: 'Operating CF', value: Math.abs(totalOCF), color: '#059669', originalValue: totalOCF },
+                { name: 'CapEx', value: Math.abs(totalCapex), color: '#dc2626', originalValue: -totalCapex },
+                { name: 'Free Cash Flow', value: Math.abs(totalFCF), color: totalFCF >= 0 ? '#1e3a8a' : '#dc2626', originalValue: totalFCF },
+                { name: 'PV of FCF', value: Math.abs(totalPV), color: totalPV >= 0 ? '#3b82f6' : '#dc2626', originalValue: totalPV },
+                { name: 'Terminal PV', value: terminalPV, color: terminalPV >= 0 ? '#6366f1' : '#dc2626', originalValue: terminalPV },
+                { name: 'Total DCF Value', value: Math.abs(totalPV + terminalPV), color: (totalPV + terminalPV) >= 0 ? '#f59e0b' : '#dc2626', originalValue: totalPV + terminalPV }
+            ];
+
+            const links = [
+                { source: 0, target: 2, value: Math.abs(totalOCF) },
+                { source: 1, target: 2, value: Math.abs(totalCapex) },
+                { source: 2, target: 3, value: Math.abs(totalFCF) },
+                { source: 3, target: 5, value: Math.abs(totalPV) },
+                { source: 4, target: 5, value: terminalPV }
+            ];
+
+            // Create sankey generator
+            const sankey = d3.sankey()
+                .nodeWidth(15)
+                .nodePadding(15)
+                .extent([[1, 1], [width - 1, height - 6]]);
+
+            const { nodes: sankeyNodes, links: sankeyLinks } = sankey({
+                nodes: nodes.map(d => Object.assign({}, d)),
+                links: links.map(d => Object.assign({}, d))
+            });
+
+            // Add links
+            svg.append('g')
+                .selectAll('path')
+                .data(sankeyLinks)
+                .join('path')
+                .attr('d', d3.sankeyLinkHorizontal())
+                .attr('stroke', d => {
+                    // Special coloring for CapEx (negative flow)
+                    if (d.source.name === 'CapEx') return '#dc2626';
+                    return d.source.color;
+                })
+                .attr('stroke-width', d => Math.max(1, d.width))
+                .attr('fill', 'none')
+                .attr('stroke-opacity', 0.6)
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('stroke-opacity', 0.8);
+                    const tooltip = d3.select('#cashflow-tooltip');
+                    const flowType = d.source.name === 'CapEx' ? 'Deduction' : 'Flow';
+                    tooltip.html(`
+                        <div><strong>${d.source.name} → ${d.target.name}</strong></div>
+                        <div class="sankey-value">${flowType}: $${d.value.toFixed(1)}M</div>
+                    `)
+                    .classed('visible', true)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function(event, d) {
+                    d3.select(this).attr('stroke-opacity', 0.6);
+                    d3.select('#cashflow-tooltip').classed('visible', false);
+                });
+
+            // Add nodes
+            const node = svg.append('g')
+                .selectAll('g')
+                .data(sankeyNodes)
+                .join('g');
+
+            node.append('rect')
+                .attr('x', d => d.x0)
+                .attr('y', d => d.y0)
+                .attr('height', d => d.y1 - d.y0)
+                .attr('width', d => d.x1 - d.x0)
+                .attr('fill', d => d.color)
+                .attr('stroke', '#000')
+                .attr('stroke-width', 0.5);
+
+            node.append('text')
+                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr('y', d => (d.y1 + d.y0) / 2)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', d => d.x0 < width / 2 ? 'start' : 'end')
+                .text(d => d.name)
+                .style('font-size', '10px')
+                .style('font-weight', '500');
+
+            node.append('text')
+                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr('y', d => (d.y1 + d.y0) / 2 + 12)
+                .attr('dy', '0.35em')
+                .attr('text-anchor', d => d.x0 < width / 2 ? 'start' : 'end')
+                .text(d => {
+                    const sign = d.originalValue < 0 ? '-' : '';
+                    return `${sign}$${d.value.toFixed(1)}M`;
+                })
+                .style('font-size', '9px')
+                .style('font-weight', '600')
+                .style('fill', d => d.originalValue < 0 ? '#dc2626' : '#6b7280');
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', async function () {
+            initializeCharts();
+
+            // Discover and populate companies
+            const companies = await discoverCompanies();
+            if (companies.length > 0) {
+                populateCompanyList(companies);
+                // Load first available company
+                loadCompanyData(companies[0].ticker);
+            } else {
+                document.getElementById('companyList').innerHTML = '<p>No company data available</p>';
+            }
+
+            // Accordion functionality
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function () {
+                    const content = this.nextElementSibling;
+                    const isActive = content.classList.contains('active');
+
+                    // Close all
+                    document.querySelectorAll('.accordion-content').forEach(c => {
+                        c.classList.remove('active');
+                    });
+
+                    document.querySelectorAll('.accordion-header span:last-child').forEach(s => {
+                        s.textContent = '+';
+                    });
+
+                    // Open clicked one
+                    if (!isActive) {
+                        content.classList.add('active');
+                        this.querySelector('span:last-child').textContent = '−';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
+```
