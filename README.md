@@ -13,7 +13,7 @@ A comprehensive web application for advanced financial valuation using Adjusted 
 
 ## Live Demo
 
-Visit the live application: [https://[your-username].github.io/[repository-name]/](https://[your-username].github.io/[repository-name]/)
+Visit the live application: [https://[r-bit-rry.github.io/IQPage/](https://[r-bit-rry.github.io/IQPage/)
 
 ## Technologies Used
 
