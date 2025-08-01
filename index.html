@@ -716,6 +716,329 @@
             font-weight: 600;
             color: var(--accent);
         }
+
+        /* Enhanced Formula Styles - Alternative 1 */
+        .formula-enhanced {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .formula-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .formula-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .formula-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .formula-complexity {
+            display: flex;
+            gap: 4px;
+        }
+
+        .complexity-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #e2e8f0;
+            transition: background-color 0.3s;
+        }
+
+        .complexity-dot.active {
+            background-color: var(--accent);
+        }
+
+        .formula-main {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .formula-breakdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .formula-component {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .formula-component:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .formula-component[data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 58, 138, 0.9);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            z-index: 10;
+            margin-bottom: 5px;
+        }
+
+        .component-symbol {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .component-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .formula-operator {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Interactive Diagram Styles */
+        .interactive-diagram {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .flow-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .flow-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            min-width: 100px;
+        }
+
+        .flow-node:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+        }
+
+        .flow-node[data-value]:hover::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .node-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .node-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .node-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .flow-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .arrow-line {
+            width: 30px;
+            height: 2px;
+            background: var(--secondary);
+            position: relative;
+        }
+
+        .arrow-head {
+            width: 0;
+            height: 0;
+            border-left: 6px solid var(--secondary);
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            margin-left: 30px;
+            margin-top: -1px;
+        }
+
+        .arrow-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* Timeline Styles for DCF */
+        .timeline-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .timeline-period {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .timeline-period:hover {
+            transform: translateY(-5px);
+        }
+
+        .period-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .period-number {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-period.terminal .period-number {
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        .cash-flow-bar {
+            width: 20px;
+            background: linear-gradient(to top, var(--primary), var(--secondary));
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .terminal-bar {
+            background: linear-gradient(to top, var(--accent), #fbbf24) !important;
+        }
+
+        .timeline-period:hover .cash-flow-bar {
+            transform: scaleY(1.1);
+        }
+
+        .period-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .discount-visualization {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .discount-arrow {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 20px solid var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .discount-label {
+            font-size: 0.875rem;
+            color: var(--secondary);
+            font-weight: 500;
+        }
     </style>
 </head>
 
@@ -754,30 +1077,63 @@
                     <p>ARI measures the economic profit a company generates after accounting for the cost of equity
                         capital. It focuses on value creation rather than just accounting profit.</p>
 
-                    <div class="formula">RI = Earnings - (Cost of Equity × Book Value)</div>
-
-                    <div class="diagram">
-                        <div style="text-align: center;">
-                            <div style="display: flex; justify-content: space-between; width: 80%; margin: 1rem auto;">
-                                <div style="text-align: center;">
-                                    <div
-                                        style="background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">
-                                        E</div>
-                                    <div style="font-size: 0.8rem;">Earnings</div>
-                                </div>
-                                <div style="text-align: center; margin: 1.5rem 0;">
-                                    <div style="color: var(--primary); font-size: 1.5rem;">−</div>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div
-                                        style="background: var(--secondary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">
-                                        C</div>
-                                    <div style="font-size: 0.8rem;">Capital Cost</div>
-                                </div>
+                    <div class="formula-enhanced">
+                        <div class="formula-header">
+                            <span class="formula-label">Core Formula</span>
+                            <div class="formula-complexity">
+                                <span class="complexity-dot active"></span>
+                                <span class="complexity-dot"></span>
+                                <span class="complexity-dot"></span>
                             </div>
-                            <div
-                                style="border-top: 2px solid var(--accent); width: 80%; margin: 1rem auto; padding-top: 0.5rem;">
-                                <div style="color: var(--accent); font-weight: 600;">Residual Income</div>
+                        </div>
+                        <div class="formula-main">
+                            $$RI_t = E_t - (r_e \times BV_{t-1})$$
+                        </div>
+                        <div class="formula-breakdown">
+                            <div class="formula-component" data-tooltip="Net Income for period t">
+                                <span class="component-symbol">E<sub>t</sub></span>
+                                <span class="component-label">Earnings</span>
+                            </div>
+                            <div class="formula-operator">−</div>
+                            <div class="formula-component" data-tooltip="Required return on equity">
+                                <span class="component-symbol">r<sub>e</sub></span>
+                                <span class="component-label">Cost of Equity</span>
+                            </div>
+                            <div class="formula-operator">×</div>
+                            <div class="formula-component" data-tooltip="Book value at beginning of period">
+                                <span class="component-symbol">BV<sub>t-1</sub></span>
+                                <span class="component-label">Book Value</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="interactive-diagram">
+                        <div class="diagram-title">Value Creation Flow</div>
+                        <div class="flow-container">
+                            <div class="flow-node earnings-node" data-value="$125M">
+                                <div class="node-icon">💰</div>
+                                <div class="node-label">Earnings</div>
+                                <div class="node-value">E<sub>t</sub></div>
+                            </div>
+                            <div class="flow-arrow">
+                                <div class="arrow-line"></div>
+                                <div class="arrow-head"></div>
+                                <div class="arrow-label">minus</div>
+                            </div>
+                            <div class="flow-node capital-cost-node" data-value="$45M">
+                                <div class="node-icon">📊</div>
+                                <div class="node-label">Capital Cost</div>
+                                <div class="node-value">r<sub>e</sub> × BV</div>
+                            </div>
+                            <div class="flow-arrow">
+                                <div class="arrow-line"></div>
+                                <div class="arrow-head"></div>
+                                <div class="arrow-label">equals</div>
+                            </div>
+                            <div class="flow-node result-node" data-value="$80M">
+                                <div class="node-icon">✨</div>
+                                <div class="node-label">Economic Profit</div>
+                                <div class="node-value">RI<sub>t</sub></div>
                             </div>
                         </div>
                     </div>
@@ -798,51 +1154,75 @@
                     <p>DCF values a company based on the present value of its expected future cash flows, discounted at
                         an appropriate rate that reflects the risk of those cash flows.</p>
 
-                    <div class="formula">PV = FCF / (1 + WACC)<sup>n</sup></div>
-
-                    <div class="diagram">
-                        <div style="text-align: center;">
-                            <div
-                                style="display: flex; flex-direction: column; gap: 0.5rem; width: 80%; margin: 0 auto;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div
-                                        style="background: #3b82f6; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                        1</div>
-                                    <div style="flex-grow: 1; height: 2px; background: #d1d5db; margin: 0 0.5rem;">
-                                    </div>
-                                    <div
-                                        style="background: #3b82f6; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                        2</div>
-                                    <div style="flex-grow: 1; height: 2px; background: #d1d5db; margin: 0 0.5rem;">
-                                    </div>
-                                    <div
-                                        style="background: #3b82f6; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                        3</div>
-                                    <div style="flex-grow: 1; height: 2px; background: #d1d5db; margin: 0 0.5rem;">
-                                    </div>
-                                    <div
-                                        style="background: #6b7280; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                        ...</div>
-                                    <div style="flex-grow: 1; height: 2px; background: #d1d5db; margin: 0 0.5rem;">
-                                    </div>
-                                    <div
-                                        style="background: var(--accent); color: #1f2937; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                        ∞</div>
-                                </div>
-                                <div
-                                    style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-light);">
-                                    <span>Year 1</span>
-                                    <span>Year 2</span>
-                                    <span>Year 3</span>
-                                    <span></span>
-                                    <span>Terminal</span>
-                                </div>
+                    <div class="formula-enhanced">
+                        <div class="formula-header">
+                            <span class="formula-label">Present Value Formula</span>
+                            <div class="formula-complexity">
+                                <span class="complexity-dot active"></span>
+                                <span class="complexity-dot active"></span>
+                                <span class="complexity-dot"></span>
                             </div>
-                            <div style="margin-top: 1rem; color: var(--primary); font-weight: 600;">Present Value</div>
+                        </div>
+                        <div class="formula-main">
+                            $$PV = \sum_{t=1}^{n} \frac{FCF_t}{(1 + WACC)^t} + \frac{TV}{(1 + WACC)^n}$$
+                        </div>
+                        <div class="formula-breakdown">
+                            <div class="formula-component" data-tooltip="Free Cash Flow in period t">
+                                <span class="component-symbol">FCF<sub>t</sub></span>
+                                <span class="component-label">Free Cash Flow</span>
+                            </div>
+                            <div class="formula-operator">÷</div>
+                            <div class="formula-component" data-tooltip="Weighted Average Cost of Capital">
+                                <span class="component-symbol">WACC</span>
+                                <span class="component-label">Discount Rate</span>
+                            </div>
+                            <div class="formula-operator">+</div>
+                            <div class="formula-component" data-tooltip="Terminal Value beyond forecast period">
+                                <span class="component-symbol">TV</span>
+                                <span class="component-label">Terminal Value</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="benefics">
+                    <div class="interactive-diagram">
+                        <div class="diagram-title">Cash Flow Timeline</div>
+                        <div class="timeline-container">
+                            <div class="timeline-period" data-period="1">
+                                <div class="period-node">
+                                    <div class="period-number">1</div>
+                                    <div class="cash-flow-bar" style="height: 60px;"></div>
+                                    <div class="period-label">Year 1</div>
+                                </div>
+                            </div>
+                            <div class="timeline-period" data-period="2">
+                                <div class="period-node">
+                                    <div class="period-number">2</div>
+                                    <div class="cash-flow-bar" style="height: 75px;"></div>
+                                    <div class="period-label">Year 2</div>
+                                </div>
+                            </div>
+                            <div class="timeline-period" data-period="3">
+                                <div class="period-node">
+                                    <div class="period-number">3</div>
+                                    <div class="cash-flow-bar" style="height: 85px;"></div>
+                                    <div class="period-label">Year 3</div>
+                                </div>
+                            </div>
+                            <div class="timeline-period terminal" data-period="terminal">
+                                <div class="period-node">
+                                    <div class="period-number">∞</div>
+                                    <div class="cash-flow-bar terminal-bar" style="height: 100px;"></div>
+                                    <div class="period-label">Terminal</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="discount-visualization">
+                            <div class="discount-arrow"></div>
+                            <div class="discount-label">Discounted to Present Value</div>
+                        </div>
+                    </div>
+
+                    <div class="benefits">
                         <h4>Key Benefits</h4>
                         <ul>
                             <li>Incorporates the time value of money</li>
